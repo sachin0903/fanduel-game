@@ -1,8 +1,8 @@
 import { createSelector } from 'reselect';
 
-const playersSelector = state =>  state && state.game.players;
+const playersSelector = state =>  state.game && state.game.players;
 
-const nextPairSelector = state => state && state.game.nextPair;
+const nextPairSelector = state => state.game && state.game.nextPair;
 
 const playerSelector = createSelector(
   playersSelector,

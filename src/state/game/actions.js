@@ -5,9 +5,8 @@ export const START_GAME = 'START_GAME';
 export const PLAYERS_LOADED = 'PLAYERS_LOADED';
 export const GUESS_PLAYER = 'GUESS_PLAYER';
 
-export const startGame = data => ({
-  type: START_GAME,
-  data
+export const startGame = () => ({
+  type: START_GAME
 });
 
 export const playersLoaded = (players) => ({

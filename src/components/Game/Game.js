@@ -13,7 +13,7 @@ const Game = ({ step }) => {
     case 'GAME_COMPLETE':
       return <Complete />;
     default:
-      return <div>Welcome</div>
+      return <Welcome />
   }
 };
 
