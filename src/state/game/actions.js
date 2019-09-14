@@ -25,15 +25,11 @@ export const guessPlayer = (id) => ({
   id
 });
 
-export const loadPlayers = () => async (dispatch) => {
-  console.log('agsdhsdghsdfg');
-  try {
-    await fetch('../../../data/game.json').then(res => res.json()).then(({ players }) => {
-      dispatch(playersLoaded(players));
-    })
-  } catch(e) {
-    console.log(e);
-  }
 
-  return Promise.resolve('Success');
-} ;
+export const loadPlayers = () => {
+  return dispatch => {
+     return fetch('../../../data/game.json')
+        .then(response => response.json())
+        .then(json => dispatch(playersLoaded(json.players)));
+  }
+}

@@ -1,0 +1,7 @@
+public
+public/dist
+node_modules
+image
+coverage
+.idea
+*.iml

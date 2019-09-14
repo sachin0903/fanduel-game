@@ -7,17 +7,9 @@ const Guessing = ({ playerA, playerB, loadPlayers, guessPlayer}) => {
 
   const [lastGuessedPlayerId, setLastGuessedPlayerId] = useState(null);
 
-  useEffect(() => {
-    console.log('123');
-
-    Promise.all([loadPlayers()])
-      .then(() => {
-        console.log('done');
-      })
-      .catch((e) => {
-        console.log(e);
-      });
-  });
+  useEffect( () => {
+    loadPlayers();
+  }, [loadPlayers]);
 
   const onNextClick = () => {
     guessPlayer();
