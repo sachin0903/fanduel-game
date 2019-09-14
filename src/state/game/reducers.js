@@ -3,13 +3,12 @@ import {
   PLAYERS_LOADED,
   GUESS_PLAYER
 } from './actions';
-import { getNextPair, didGuessCorrectly, gameOver } from '../../utils';
+import { getNextPair, getPlayerScoreAndPlayedCount, gameOver } from '../../utils';
 import jsonData from '../../../data/game.json';
 
 const initialData = JSON.parse(JSON.stringify(jsonData));
 
-const game = (state = initialData, action) => {
-  console.log('action.players', action);
+const game = (state = {...initialData, step: 'WELCOME'}, action) => {
   switch (action.type) {
     case START_GAME:
       return {
@@ -18,43 +17,33 @@ const game = (state = initialData, action) => {
         playerScore: 0,
         played: 0,
         seenPlayerIDs: [],
-        nextPair: getNextPair(state.players, [])
+        nextPair: getNextPair(state.players)
       };
     case PLAYERS_LOADED:
       return {
         ...state,
         players: [...action.players],
         seenPlayerIDs: [],
-        nextPair: getNextPair(action.players, []),
+        nextPair: getNextPair(action.players),
         playerScore: 0,
         played: 0
       };
     case GUESS_PLAYER:
-      console.log('action', action);
-      const guessedCorrectly = didGuessCorrectly(
-        state.players,
-        action.id,
-        state.nextPair
-      );
+      const playerData = getPlayerScoreAndPlayedCount(state, action);
 
-      console.log('state.nextPair', state.nextPair);
       const newSeenPlayerIDs = [...state.seenPlayerIDs, ...state.nextPair];
-      console.log('newSeenPlayerIDs', newSeenPlayerIDs);
-      const newScore = state.playerScore + Number(guessedCorrectly);
-      const played = state.played + 1;
+
       if (gameOver(state.players, newSeenPlayerIDs)) {
         return {
           ...state,
-          playerScore: newScore,
-          played,
+          ...playerData,
           step: "GAME_COMPLETE"
         };
       }
       const newNextPair = getNextPair(state.players, newSeenPlayerIDs);
       return {
         ...state,
-        played,
-        playerScore: newScore,
+        ...playerData,
         seenPlayerIDs: newSeenPlayerIDs,
         nextPair: newNextPair
       };
@@ -62,5 +51,7 @@ const game = (state = initialData, action) => {
       return state;
   }
 };
+
+
 
 export default game;

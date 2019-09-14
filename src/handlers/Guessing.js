@@ -5,7 +5,6 @@ import {playerSelector} from "../state/game/selector";
 
 export default connect(
   state => ({
-    ...state,
       playerA: playerSelector(state)(0),
       playerB: playerSelector(state)(1)
   }),

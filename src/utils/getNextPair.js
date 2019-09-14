@@ -2,7 +2,7 @@ const randomNumberUpTo = (max) => {
   return Math.floor(Math.random() * max);
 };
 
-const getNextPair = (allPlayers, seenPlayerIDs) => {
+const getNextPair = (allPlayers, seenPlayerIDs = []) => {
   const validPlayers = allPlayers.filter(
     ({ id }) => !seenPlayerIDs.includes(id)
   );

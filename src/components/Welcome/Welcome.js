@@ -1,14 +1,12 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
-import Game from '../../handlers/Game';
 
 const Welcome = ({ startGame }) => {
   return (
     <Fragment>
-      <button onClick={() => startGame()} >Start</button>
-      <Game />
+        <h1>Welcome</h1>
+        <button onClick={() => startGame()} >Start</button>
     </Fragment>
-
   )
 };
 

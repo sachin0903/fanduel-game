@@ -4,8 +4,7 @@ import { startGame } from '../state/game/actions';
 
 export default connect(
   state => ({
-    ...state,
-    playerScore: 0, //will have to implement this
+    playerScore: state.game.playerScore,
     played: state.game.played + 1
   }),
   { startGame }

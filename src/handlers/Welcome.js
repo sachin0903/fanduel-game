@@ -3,9 +3,7 @@ import Welcome from '../components/Welcome/Welcome';
 import { startGame } from '../state/game/actions';
 
 export default connect(
-  state => ({
-    ...state
-  }),
-  { startGame }
+    null,
+    { startGame }
 )(Welcome);
 
