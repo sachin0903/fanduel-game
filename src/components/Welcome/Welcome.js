@@ -5,7 +5,7 @@ const Welcome = ({ startGame }) => {
   return (
     <Fragment>
         <h1>Welcome</h1>
-        <button onClick={() => startGame()}>Start</button>
+        <button onClick={startGame}>Start</button>
     </Fragment>
   )
 };

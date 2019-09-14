@@ -12,8 +12,6 @@ const Game = ({ step }) => {
       return <Guessing />;
     case 'GAME_COMPLETE':
       return <Complete />;
-    default:
-      return <Welcome />
   }
 };
 
