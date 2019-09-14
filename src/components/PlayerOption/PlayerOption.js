@@ -1,11 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+const divStyle = {
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center'
+};
+
 const PlayerOption = ({ player, altText, hasGuessed, guess }) => {
   const { first_name, last_name, fppg, images} = player;
   return(
     <div
-      // style="display: flex; flex-direction: column; align-items: center"
+      style={divStyle}
       onClick={() => guess(player)}
     >
       <img

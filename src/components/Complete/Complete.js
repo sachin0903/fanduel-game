@@ -6,7 +6,7 @@ const Complete = ({ startGame, playerScore, played }) => {
     <Fragment>
       <h1>Game Finished</h1>
       <div>
-        You scored: {{playerScore}} out of {{played}} 🎊
+        You scored: {playerScore} out of {played} 🎊
       </div>
       <button onClick={() => startGame()}>RESTART</button>
     </Fragment>
@@ -14,8 +14,8 @@ const Complete = ({ startGame, playerScore, played }) => {
 };
 
 Complete.propTypes = {
-  playerScore: PropTypes.string.isRequired,
-  played: PropTypes.string.isRequired,
+  playerScore: PropTypes.number.isRequired,
+  played: PropTypes.number.isRequired,
   startGame: PropTypes.func.isRequired
 };
 

@@ -30,12 +30,16 @@ const game = (state = initialData, action) => {
         played: 0
       };
     case GUESS_PLAYER:
+      console.log('action', action);
       const guessedCorrectly = didGuessCorrectly(
         state.players,
         action.id,
         state.nextPair
       );
+
+      console.log('state.nextPair', state.nextPair);
       const newSeenPlayerIDs = [...state.seenPlayerIDs, ...state.nextPair];
+      console.log('newSeenPlayerIDs', newSeenPlayerIDs);
       const newScore = state.playerScore + Number(guessedCorrectly);
       const played = state.played + 1;
       if (gameOver(state.players, newSeenPlayerIDs)) {

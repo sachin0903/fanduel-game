@@ -6,24 +6,31 @@ import PlayerOption from '../PlayerOption/PlayerOption';
 const Guessing = ({ playerA, playerB, loadPlayers, guessPlayer}) => {
 
   const [lastGuessedPlayerId, setLastGuessedPlayerId] = useState(null);
+  const [hasGuessed, setHasGuessed] = useState(false);
 
   useEffect( () => {
     loadPlayers();
   }, [loadPlayers]);
 
-  const onNextClick = () => {
-    guessPlayer();
-  };
 
   const guess = (player) => {
     setLastGuessedPlayerId(player.id);
+    setHasGuessed(true);
   };
+
+  const showButton = (playerA.id === lastGuessedPlayerId || playerB.id === lastGuessedPlayerId);
+
+  const onClick = () => {
+    guessPlayer(lastGuessedPlayerId);
+    setHasGuessed(false);
+  };
+
 
   return (
     <Fragment>
-      <PlayerOption player={playerA} guess={guess} altText="altText" hasGuessed = { playerA.id === lastGuessedPlayerId}/>
-      <PlayerOption player={playerB} guess={guess} altText="altText" hasGuessed = { playerB.id === lastGuessedPlayerId}/>
-      <button onClick={() => onNextClick()}>NEXT PLAYERS</button>
+      <PlayerOption player={playerA} guess={guess} altText="altText" hasGuessed = {hasGuessed}/>
+      <PlayerOption player={playerB} guess={guess} altText="altText" hasGuessed = {hasGuessed}/>
+      {showButton && <button onClick={() => onClick()}>NEXT PLAYERS</button>}
     </Fragment>
   )
 
