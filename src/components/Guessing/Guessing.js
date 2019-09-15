@@ -18,7 +18,7 @@ const Guessing = ({ players, nextPair, loadPlayers, guessPlayer}) => {
     setHasGuessed(true);
   };
 
-  const showButton = (players) && nextPair && nextPair.indexOf(lastGuessedPlayerId) > -1;
+  const showButton = (players && nextPair) && nextPair.indexOf(lastGuessedPlayerId) > -1;
 
   const playerA = getPlayer(players, nextPair)(0);
   const playerB = getPlayer(players, nextPair)(1);
@@ -32,8 +32,8 @@ const Guessing = ({ players, nextPair, loadPlayers, guessPlayer}) => {
   return (
     (players.length > 0) ?
       <Fragment>
-        <PlayerOption player={playerA} guess={guess} altText="altText" hasGuessed = {hasGuessed}/>
-        <PlayerOption player={playerB} guess={guess} altText="altText" hasGuessed = {hasGuessed}/>
+        <PlayerOption player={playerA} guess={guess} altText="altText" hasGuessed={hasGuessed}/>
+        <PlayerOption player={playerB} guess={guess} altText="altText" hasGuessed={hasGuessed}/>
         {showButton && <button onClick={onClick}>NEXT PLAYERS</button>}
       </Fragment> : null
   )
