@@ -1,4 +1,4 @@
-import { handleAction, handleActions} from 'redux-actions';
+import { handleActions} from 'redux-actions';
 import reduceReducers from 'reduce-reducers';
 
 import {
@@ -17,42 +17,41 @@ const startGame = handleActions({
            playerScore: 0,
            played: 0,
            seenPlayerIDs: [],
-           nextPair: getNextPair(state.players)
+           // nextPair: getNextPair(state.players)
         })
     },
-    {step: 'WELCOME', players: initialData.players}
+    {step: 'WELCOME', players:[]}
 );
 
-const playersLoaded = handleAction(
-    'PLAYERS_LOADED',
-    ( state, action) => (
+const playersLoaded = handleActions({
 
-        {
+    [PLAYERS_LOADED]:( state, action) => ({
             ...state,
             players: [...action.players],
             seenPlayerIDs: [],
             nextPair: getNextPair(action.players),
             playerScore: 0,
             played: 0
-        }
-    ),
+        })
+    },
     {}
 );
 
 const guessPlayer = handleActions({
     [GUESS_PLAYER]: (state, action ) => {
+        const {seenPlayerIDs, nextPair, players } = state;
         const playerData = getPlayerScoreAndPlayedCount(state, action);
 
-        const newSeenPlayerIDs = [...state.seenPlayerIDs, ...state.nextPair];
+        const newSeenPlayerIDs = [...seenPlayerIDs, ...nextPair];
 
-        if (gameOver(state.players, newSeenPlayerIDs)) {
+        if (gameOver(players, newSeenPlayerIDs)) {
             return {
                 ...state,
                 ...playerData,
                 step: "GAME_COMPLETE"
             };
         }
-        const newNextPair = getNextPair(state.players, newSeenPlayerIDs);
+        const newNextPair = getNextPair(players, newSeenPlayerIDs);
         return {
             ...state,
             ...playerData,
@@ -60,8 +59,8 @@ const guessPlayer = handleActions({
             nextPair: newNextPair
         }
     }
-}, {}
-);
+}, {});
+
 
 const game = reduceReducers(
     startGame,

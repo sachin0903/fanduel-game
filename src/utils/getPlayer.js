@@ -1,0 +1,1 @@
+export const getPlayer = (players, nextPair) => (index) => (players && nextPair) && players.find(({id}) => nextPair[index] === id);

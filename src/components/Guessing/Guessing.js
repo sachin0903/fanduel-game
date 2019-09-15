@@ -1,15 +1,15 @@
 import React, { useState, useEffect, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import PlayerOption from '../PlayerOption/PlayerOption';
+import { getPlayer } from '../../utils/getPlayer';
 
-
-const Guessing = ({ playerA, playerB, loadPlayers, guessPlayer}) => {
+const Guessing = ({ players, nextPair, loadPlayers, guessPlayer}) => {
 
   const [lastGuessedPlayerId, setLastGuessedPlayerId] = useState(null);
   const [hasGuessed, setHasGuessed] = useState(false);
 
   useEffect( () => {
-    loadPlayers();
+    players.length === 0 && loadPlayers();
   }, [loadPlayers]);
 
 
@@ -18,7 +18,10 @@ const Guessing = ({ playerA, playerB, loadPlayers, guessPlayer}) => {
     setHasGuessed(true);
   };
 
-  const showButton = (playerA.id === lastGuessedPlayerId || playerB.id === lastGuessedPlayerId);
+  const showButton = (players) && nextPair && nextPair.indexOf(lastGuessedPlayerId) > -1;
+
+  const playerA = getPlayer(players, nextPair)(0);
+  const playerB = getPlayer(players, nextPair)(1);
 
   const onClick = () => {
     guessPlayer(lastGuessedPlayerId);
@@ -27,18 +30,19 @@ const Guessing = ({ playerA, playerB, loadPlayers, guessPlayer}) => {
 
 
   return (
-    <Fragment>
-      <PlayerOption player={playerA} guess={guess} altText="altText" hasGuessed = {hasGuessed}/>
-      <PlayerOption player={playerB} guess={guess} altText="altText" hasGuessed = {hasGuessed}/>
-      {showButton && <button onClick={() => onClick()}>NEXT PLAYERS</button>}
-    </Fragment>
+    (players.length > 0) ?
+      <Fragment>
+        <PlayerOption player={playerA} guess={guess} altText="altText" hasGuessed = {hasGuessed}/>
+        <PlayerOption player={playerB} guess={guess} altText="altText" hasGuessed = {hasGuessed}/>
+        {showButton && <button onClick={onClick}>NEXT PLAYERS</button>}
+      </Fragment> : null
   )
 
 };
 
 Guessing.propTypes = {
-  playerA: PropTypes.object.isRequired,
-  playerB: PropTypes.object.isRequired,
+  players: PropTypes.array,
+  nextPair: PropTypes.array,
   loadPlayers: PropTypes.func.isRequired,
   guessPlayer: PropTypes.func.isRequired
 };
