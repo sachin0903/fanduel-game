@@ -7,8 +7,6 @@ import {
     GUESS_PLAYER
 } from './actions';
 import {gameOver, getNextPair, getPlayerScoreAndPlayedCount} from "../../utils";
-import jsonData from "../../../data/game";
-const initialData = JSON.parse(JSON.stringify(jsonData));
 
 const startGame = handleActions({
        [START_GAME]: (state) => ({
@@ -17,7 +15,6 @@ const startGame = handleActions({
            playerScore: 0,
            played: 0,
            seenPlayerIDs: [],
-           // nextPair: getNextPair(state.players)
         })
     },
     {step: 'WELCOME', players:[]}
