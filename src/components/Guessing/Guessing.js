@@ -2,8 +2,9 @@ import React, { useState, useEffect, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import PlayerOption from '../PlayerOption/PlayerOption';
 import { getPlayer } from '../../utils/getPlayer';
+import {gameComplete, didGuessCorrectly, getPlayerScoreAndPlayedCount} from "../../utils";
 
-const Guessing = ({ players, nextPair, loadPlayers, guessPlayer}) => {
+const Guessing = ({ players, nextPair, loadPlayers, guessPlayer, played, playerScore, seenPlayers, setScore, gameOver, seenPlayerIDs}) => {
 
   const [lastGuessedPlayerId, setLastGuessedPlayerId] = useState(null);
   const [hasGuessed, setHasGuessed] = useState(false);
@@ -18,13 +19,22 @@ const Guessing = ({ players, nextPair, loadPlayers, guessPlayer}) => {
     setHasGuessed(true);
   };
 
-  const showButton = (players && nextPair) && nextPair.indexOf(lastGuessedPlayerId) > -1;
+
+  const showButton = (players.length > 0 && nextPair.length > 0) && nextPair.indexOf(lastGuessedPlayerId) > -1;
 
   const playerA = getPlayer(players, nextPair)(0);
   const playerB = getPlayer(players, nextPair)(1);
 
+
   const onClick = () => {
+    const newSeenPlayerIDs = [...seenPlayerIDs, ...nextPair];
+    if (gameComplete(players, newSeenPlayerIDs)) {
+      return gameOver();
+    }
+    const guessedCorrectly = didGuessCorrectly(players, lastGuessedPlayerId, nextPair);
     guessPlayer(lastGuessedPlayerId);
+    seenPlayers(nextPair);
+    setScore(guessedCorrectly);
     setHasGuessed(false);
   };
 
@@ -44,7 +54,11 @@ Guessing.propTypes = {
   players: PropTypes.array,
   nextPair: PropTypes.array,
   loadPlayers: PropTypes.func.isRequired,
-  guessPlayer: PropTypes.func.isRequired
+  guessPlayer: PropTypes.func.isRequired,
+  seenPlayers: PropTypes.func.isRequired,
+  setScore: PropTypes.func.isRequired,
+  gameOver: PropTypes.func.isRequired,
+  seenPlayerIDs: PropTypes.array
 };
 
 export default Guessing;

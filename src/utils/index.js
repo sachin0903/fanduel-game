@@ -1,11 +1,11 @@
 import { getNextPair} from "./getNextPair";
 import { didGuessCorrectly} from "./didGuessCorrectly";
-import { gameOver } from './gameOver';
+import { gameComplete } from './gameComplete';
 import { getPlayerScoreAndPlayedCount } from './getPlayerScoreAndPlayedCount';
 
 export {
   getNextPair,
   didGuessCorrectly,
-  gameOver,
+  gameComplete,
   getPlayerScoreAndPlayedCount
 }

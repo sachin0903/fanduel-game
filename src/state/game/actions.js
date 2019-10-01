@@ -1,24 +1,47 @@
-const PLAYERS_JSON_URL =
-  "https://gist.githubusercontent.com/liamjdouglas/79c5dc9f1ec682afac6ec0b0278175d5/raw/67ce51c2b06e44f365367c266bb00698c3f3bac4/mini_guessing_players.json";
-
-export const START_GAME = 'START_GAME';
-export const PLAYERS_LOADED = 'PLAYERS_LOADED';
-export const GUESS_PLAYER = 'GUESS_PLAYER';
+export const GAME = 'GAME';
+export const PLAYERS = 'PLAYERS';
+export const SEEN_PLAYERS = 'SEEN_PLAYERS';
+export const SCORE = 'SCORE';
 
 export const startGame = () => ({
-  type: START_GAME
+  type: GAME,
+  step: "GUESSING"
 });
 
 export const playersLoaded = (players) => ({
-  type: PLAYERS_LOADED,
+  type: PLAYERS,
   players
 });
 
 
 export const guessPlayer = (id) => ({
-  type: GUESS_PLAYER,
+  step: "GUESSING",
+  type: GAME,
   id
 });
+
+export const game = (id, players) => ({
+  step: "GAME_COMPLETE",
+  type: GAME,
+  id,
+  players
+});
+
+export const seenPlayers = (ids) => ({
+  type: SEEN_PLAYERS,
+  ids
+});
+
+export const setScore = (guessedCorrectly) => ({
+  type: SCORE,
+  guessedCorrectly
+});
+
+export const gameOver = () => ({
+  step: "GAME_COMPLETE",
+  type: GAME
+});
+
 
 
 export const loadPlayers = () => {

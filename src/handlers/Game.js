@@ -3,7 +3,7 @@ import Game from '../components/Game/Game';
 
 export default connect(
   state =>  ({
-    step: state.game.step
+    step: state.game.stage.step
   })
 )(Game);
 
